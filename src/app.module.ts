@@ -9,6 +9,8 @@ import { PacienteEntity } from './service/paciente.entity/paciente.entity';
 import { MedicoEntity } from './service/medico.entity/medico.entity';
 import { DiagnosticoEntity } from './service/diagnostico.entity/diagnostico.entity';
 import { MedicoModule } from './medico/medico.module';
+import { DiagnosticoPacienteModule } from './diagnostico-paciente/diagnostico-paciente.module';
+import { MedicoPacienteModule } from './medico-paciente/medico-paciente.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { MedicoModule } from './medico/medico.module';
       synchronize: true,
       keepConnectionAlive: true,
     }),
+    DiagnosticoPacienteModule,
+    MedicoPacienteModule,
   ],
   controllers: [AppController],
   providers: [AppService],
