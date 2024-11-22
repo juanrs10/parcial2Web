@@ -58,6 +58,6 @@ describe('PacienteService', () => {
     await expect(service.create(paciente)).rejects.toThrow(BusinessLogicException);
 
     const foundPaciente = await repository.findOne({ where: { id: paciente.id } });
-    expect(foundPaciente).toBeUndefined(); // Ensure the patient wasn't saved
+    expect(foundPaciente).toBeNull(); // Ensure the patient wasn't saved
   });
 });
