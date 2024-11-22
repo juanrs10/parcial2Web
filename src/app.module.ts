@@ -1,17 +1,34 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ServiceModule } from './service/service.module';
-import { DiagnosticoService } from './diagnostico/diagnostico.service';
-import { DiagnosticoModule } from './diagnostico/diagnostico.module';
 import { PacienteModule } from './paciente/paciente.module';
-import { PacienteService } from './paciente/paciente.service';
-import { MedicoService } from './medico/medico.service';
-import { DiagnosticoService } from './diagnostico/diagnostico.service';
+import { DiagnosticoModule } from './diagnostico/diagnostico.module';
+import { PacienteEntity } from './service/paciente.entity/paciente.entity';
+import { MedicoEntity } from './service/medico.entity/medico.entity';
+import { DiagnosticoEntity } from './service/diagnostico.entity/diagnostico.entity';
+import { MedicoModule } from './medico/medico.module';
 
 @Module({
-  imports: [ServiceModule, PacienteModule, DiagnosticoModule],
+  imports: [
+    PacienteModule,
+    MedicoModule,
+    DiagnosticoModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'postgres',
+      database: 'medicine',
+      entities: [PacienteEntity, MedicoEntity, DiagnosticoEntity],
+      dropSchema: true,
+      synchronize: true,
+      keepConnectionAlive: true,
+    }),
+  ],
   controllers: [AppController],
-  providers: [AppService, DiagnosticoService, MedicoService, PacienteService],
+  providers: [AppService],
 })
 export class AppModule {}
