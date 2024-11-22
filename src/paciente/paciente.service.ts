@@ -124,4 +124,22 @@ export class PacienteService {
     paciente.medicos.push(medico);
     await this.pacienteRepository.save(paciente);
   }
+
+  /**
+ * Actualizar un paciente por ID
+ * @param id - ID del paciente
+ * @param paciente - Nuevos datos del paciente
+ */
+async update(id: string, paciente: PacienteEntity): Promise<PacienteEntity> {
+    const existingPaciente: PacienteEntity = await this.pacienteRepository.findOne({ where: { id } });
+    if (!existingPaciente) {
+      throw new BusinessLogicException(
+        'El paciente con el ID proporcionado no fue encontrado',
+        BusinessError.NOT_FOUND,
+      );
+    }
+  
+    Object.assign(existingPaciente, paciente);
+    return await this.pacienteRepository.save(existingPaciente);
+  }
 }

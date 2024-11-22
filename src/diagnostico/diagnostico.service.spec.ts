@@ -22,7 +22,9 @@ describe('DiagnosticoService', () => {
     }).compile();
 
     service = module.get<DiagnosticoService>(DiagnosticoService);
-    repository = module.get<Repository<DiagnosticoEntity>>(getRepositoryToken(DiagnosticoEntity));
+    repository = module.get<Repository<DiagnosticoEntity>>(
+      getRepositoryToken(DiagnosticoEntity),
+    );
   });
 
   it('should be defined', () => {
@@ -41,7 +43,10 @@ describe('DiagnosticoService', () => {
   });
 
   it('should find one diagnostico by id', async () => {
-    const diagnostico: DiagnosticoEntity = { id: '1', descripcion: 'Diagnóstico 1' } as DiagnosticoEntity;
+    const diagnostico: DiagnosticoEntity = {
+      id: '1',
+      descripcion: 'Diagnóstico 1',
+    } as DiagnosticoEntity;
     jest.spyOn(repository, 'findOne').mockResolvedValue(diagnostico);
 
     const result = await service.findOne('1');
@@ -51,14 +56,22 @@ describe('DiagnosticoService', () => {
   it('should throw an exception when finding a diagnostico that does not exist', async () => {
     jest.spyOn(repository, 'findOne').mockResolvedValue(null);
 
-    await expect(service.findOne('non-existing-id')).rejects.toThrow(BusinessLogicException);
+    await expect(service.findOne('non-existing-id')).rejects.toThrow(
+      BusinessLogicException,
+    );
     await expect(service.findOne('non-existing-id')).rejects.toThrowError(
-      new BusinessLogicException('El diagnóstico con el ID proporcionado no fue encontrado', BusinessError.NOT_FOUND),
+      new BusinessLogicException(
+        'El diagnóstico con el ID proporcionado no fue encontrado',
+        BusinessError.NOT_FOUND,
+      ),
     );
   });
 
   it('should create a diagnostico successfully', async () => {
-    const diagnostico: DiagnosticoEntity = { id: '1', descripcion: 'Diagnóstico válido' } as DiagnosticoEntity;
+    const diagnostico: DiagnosticoEntity = {
+      id: '1',
+      descripcion: 'Diagnóstico válido',
+    } as DiagnosticoEntity;
     jest.spyOn(repository, 'save').mockResolvedValue(diagnostico);
 
     const result = await service.create(diagnostico);
@@ -72,14 +85,22 @@ describe('DiagnosticoService', () => {
       descripcion: 'A'.repeat(201), // Descripción con más de 200 caracteres
     } as DiagnosticoEntity;
 
-    await expect(service.create(diagnostico)).rejects.toThrow(BusinessLogicException);
+    await expect(service.create(diagnostico)).rejects.toThrow(
+      BusinessLogicException,
+    );
     await expect(service.create(diagnostico)).rejects.toThrowError(
-      new BusinessLogicException('La descripción del diagnóstico no puede exceder los 200 caracteres', BusinessError.PRECONDITION_FAILED),
+      new BusinessLogicException(
+        'La descripción del diagnóstico no puede exceder los 200 caracteres',
+        BusinessError.PRECONDITION_FAILED,
+      ),
     );
   });
 
   it('should delete a diagnostico successfully', async () => {
-    const diagnostico: DiagnosticoEntity = { id: '1', descripcion: 'Diagnóstico 1' } as DiagnosticoEntity;
+    const diagnostico: DiagnosticoEntity = {
+      id: '1',
+      descripcion: 'Diagnóstico 1',
+    } as DiagnosticoEntity;
     jest.spyOn(repository, 'findOne').mockResolvedValue(diagnostico);
     jest.spyOn(repository, 'remove').mockResolvedValue(diagnostico);
 
@@ -90,9 +111,14 @@ describe('DiagnosticoService', () => {
   it('should throw an exception when deleting a diagnostico that does not exist', async () => {
     jest.spyOn(repository, 'findOne').mockResolvedValue(null);
 
-    await expect(service.delete('non-existing-id')).rejects.toThrow(BusinessLogicException);
+    await expect(service.delete('non-existing-id')).rejects.toThrow(
+      BusinessLogicException,
+    );
     await expect(service.delete('non-existing-id')).rejects.toThrowError(
-      new BusinessLogicException('El diagnóstico con el ID proporcionado no fue encontrado', BusinessError.NOT_FOUND),
+      new BusinessLogicException(
+        'El diagnóstico con el ID proporcionado no fue encontrado',
+        BusinessError.NOT_FOUND,
+      ),
     );
   });
 });

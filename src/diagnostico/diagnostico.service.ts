@@ -64,4 +64,37 @@ export class DiagnosticoService {
     }
     await this.diagnosticoRepository.remove(diagnostico);
   }
+
+  /**
+   * Actualizar un diagnóstico por ID
+   * @param id - ID del diagnóstico
+   * @param diagnostico - Nuevos datos del diagnóstico
+   */
+  async update(id: string, diagnostico: DiagnosticoEntity): Promise<DiagnosticoEntity> {
+    // Buscar el diagnóstico a actualizar
+    const existingDiagnostico = await this.diagnosticoRepository.findOne({ where: { id } });
+    
+    // Si no existe, lanzar un error
+    if (!existingDiagnostico) {
+      throw new BusinessLogicException(
+        'El diagnóstico con el ID proporcionado no fue encontrado',
+        BusinessError.NOT_FOUND,
+      );
+    }
+
+    // Verificar si la descripción no excede los 200 caracteres
+    if (diagnostico.descripcion && diagnostico.descripcion.length > 200) {
+      throw new BusinessLogicException(
+        'La descripción del diagnóstico no puede exceder los 200 caracteres',
+        BusinessError.PRECONDITION_FAILED,
+      );
+    }
+
+    // Actualizar solo los campos necesarios
+    existingDiagnostico.descripcion = diagnostico.descripcion || existingDiagnostico.descripcion;
+    // Puedes agregar más campos aquí si es necesario (por ejemplo, otros atributos del diagnóstico)
+
+    // Guardar los cambios
+    return await this.diagnosticoRepository.save(existingDiagnostico);
+  }
 }

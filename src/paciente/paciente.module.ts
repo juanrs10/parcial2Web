@@ -4,6 +4,7 @@ import { PacienteService } from './paciente.service';
 import { PacienteEntity } from '../service/paciente.entity/paciente.entity';
 import { MedicoEntity } from '../service/medico.entity/medico.entity';
 import { DiagnosticoEntity } from '../service/diagnostico.entity/diagnostico.entity';
+import { PacienteController } from './paciente.controller';
 
 @Module({
   imports: [
@@ -11,5 +12,6 @@ import { DiagnosticoEntity } from '../service/diagnostico.entity/diagnostico.ent
   ],
   providers: [PacienteService],
   exports: [PacienteService],
+  controllers: [PacienteController],
 })
 export class PacienteModule {}
