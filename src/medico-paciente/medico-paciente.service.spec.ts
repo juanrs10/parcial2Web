@@ -45,6 +45,7 @@ describe('MedicoPacienteService', () => {
       nombre: faker.name.fullName(),
       especialidad: faker.lorem.word(),
       pacientes: pacientesList,
+      telefono: faker.phone.number()
     });
   };
 

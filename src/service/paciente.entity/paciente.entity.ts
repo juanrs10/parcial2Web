@@ -17,7 +17,7 @@ export class PacienteEntity {
   @Column()
   nombre: string;
 
-  @Column()
+  @Column({ nullable: false, default: 'No especificado' })
   genero: string;
 
   @ManyToMany(() => MedicoEntity, (medico) => medico.pacientes)

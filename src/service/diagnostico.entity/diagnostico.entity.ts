@@ -7,7 +7,7 @@ export class DiagnosticoEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({nullable: true})
   nombre: string;
 
   @Column()

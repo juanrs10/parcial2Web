@@ -37,6 +37,7 @@ describe('DiagnosticoPacienteService', () => {
       const diagnostico = await diagnosticoRepository.save({
         descripcion: faker.lorem.sentence(),
         fecha: faker.date.past(),
+        nombre: faker.commerce.productName()
       });
       diagnosticosList.push(diagnostico);
     }
